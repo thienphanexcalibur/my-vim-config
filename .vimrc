@@ -2,13 +2,12 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set clipboard=unnamedplus
-
+set colorcolumn=80
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
-
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
@@ -25,9 +24,7 @@ filetype plugin indent on    " required
 " :PluginSearch foo - searches for foo; append `!` to refresh local cache
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
+" see :h vundle for more details or wiki for FAQ " Put your non-Plugin stuff after this line
 
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
@@ -51,6 +48,7 @@ map <C-l> <C-W>l
 "CTRL+ 0  to quit editing"
 " Lightline makes your vim more beautiful
 Plug 'itchyny/lightline.vim'
+Plug 'dikiaap/minimalist'
 set laststatus=2
 " Make sure you use single quotes
 Plug 'https://github.com/editorconfig/editorconfig-vim'
@@ -60,9 +58,13 @@ Plug 'https://github.com/vim-python/python-syntax'
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
+" Vue Syntax Highlighting:
+Plug 'posva/vim-vue'
 " Javascript Syntax Highlights:
 Plug 'https://github.com/pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+" Svelte syntax highlighting
+Plug 'evanleck/vim-svelte'
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
@@ -88,3 +90,7 @@ Plug '~/my-prototype-plugin'
 " Initialize plugin system
 call plug#end()
 "set rtp+=~/.vim/bundle/YouCompleteMe
+set t_Co=256
+syntax on
+colorscheme minimalist
+let NERDTreeShowHidden=1
