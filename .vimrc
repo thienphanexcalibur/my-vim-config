@@ -1,7 +1,11 @@
 au BufEnter,BufRead *.conf setf dosini
-set dir=/tmp
+set directory=/tmp
 set regexpengine=1
+set re=0
 set cursorline
+set wildignore+=*.DS_Store,*.git,*.vscode,*.idea,*.swp
+set conceallevel=3
+let NERDTreeRespectWildIgnore=1
 let g:rainbow_active = 1
 let g:vim_markdown_folding_disabled = 1
 let g:indentLine_color_term = 256
@@ -12,6 +16,7 @@ let NERDTreeDirArrows = 1
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore=['\.map$', '\~$']
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+let g:polyglot_disabled = ['ts']
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -32,7 +37,15 @@ set clipboard=unnamed
 set rtp+=~/.fzf
 set colorcolumn=0
 set laststatus=2
-set nu
+
+" Relative line numbers
+set relativenumber
+set number
+" Line number on the bar
+set ruler
+
+" Highlight the cursor line and column
+set cursorline
 set visualbell t_vb=    " turn off error beep/flash
 set novisualbell        " turn off visual bell
 
@@ -51,11 +64,14 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
-Plug 'terryma/vim-multiple-cursors'
+Plug 'sheerun/vim-polyglot'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'joshdick/onedark.vim'
+Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'vim-scripts/taglist.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'frazrepo/vim-rainbow'
-Plug 'morhetz/gruvbox'
+"Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'editorconfig/editorconfig-vim'
 "CTRL+ 0  to quit editing"
@@ -74,6 +90,8 @@ Plug 'https://github.com/vim-python/python-syntax'
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 " Stylus Highlighting
 Plug 'wavded/vim-stylus'
+" Typescript Syntax Highlighting Support
+ "Plug 'leafgarland/typescript-vim'
 " Vue Syntax Highlighting:
 Plug 'posva/vim-vue'
 " Javascript Syntax Highlights:
@@ -82,13 +100,10 @@ Plug 'mxw/vim-jsx'
 " Svelte syntax highlighting
 Plug 'evanleck/vim-svelte'
 " Markdown syntax highlighting
-Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 " Multiple Plug commands can be written in a single line using | separators
 "Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
-" Typescript Syntax Highlighting Support
-Plug 'leafgarland/typescript-vim'
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
@@ -117,7 +132,7 @@ Plug 'yardnsm/vim-import-cost', { 'do': 'npm install' }"
 call plug#end()
 set t_Co=256
 syntax on
-colorscheme gruvbox
+colorscheme onedark
 let NERDTreeShowHidden=1
 let g:ackprg = 'ag --nogroup --nocolor --column'
 let g:ycm_autoclose_preview_window_after_completion=1
