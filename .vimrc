@@ -9,6 +9,7 @@ let NERDTreeRespectWildIgnore=1
 let g:rainbow_active = 1
 let g:vim_markdown_folding_disabled = 1
 let g:indentLine_color_term = 256
+let g:javascript_plugin_jsdoc = 1
 autocmd BufWritePre * %s/\s\+$//e
 let mapleader=","
 let NERDTreeMinimalUI = 1
@@ -16,7 +17,7 @@ let NERDTreeDirArrows = 1
 let NERDTreeQuitOnOpen=1
 let NERDTreeIgnore=['\.map$', '\~$']
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-let g:polyglot_disabled = ['ts']
+"let g:polyglot_disabled = ['ts']
 let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
@@ -24,8 +25,17 @@ let g:lightline = {
       \ },
       \ 'component_function': {
       \   'gitbranch': 'gitbranch#name',
+	  \   'filename': 'LightlineFilename'
       \ },
       \ }
+function! LightlineFilename()
+  let root = fnamemodify(get(b:, 'git_dir'), ':h:h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction
 set guifont=Hack:h11
 set encoding=utf8
 set nocompatible              " be iMproved, required
@@ -55,15 +65,16 @@ call plug#begin('~/.vim/plugged')
 
 execute 'silent !print "\e[?2004l"'
 
+nnoremap <leader>o :NERDTreeToggle<cr>
 " CTRL + O show tree of files
-map <C-o> :NERDTreeToggle<CR>
+nnoremap <leader>p :Files<cr>
+
 
 " CTRL + P find files
-map <C-p> :Files<CR>
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+"map <C-j> <C-W>j
+"map <C-k> <C-W>k
+"map <C-h> <C-W>h
+"map <C-l> <C-W>l
 Plug 'sheerun/vim-polyglot'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -116,6 +127,7 @@ Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 Plug '/usr/local/opt/fzf'
 " Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Unmanaged plugin (manually installed and updated)
@@ -135,12 +147,10 @@ syntax on
 colorscheme onedark
 let NERDTreeShowHidden=1
 let g:ackprg = 'ag --nogroup --nocolor --column'
-let g:ycm_autoclose_preview_window_after_completion=1
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', 'cat {}']}, <bang>0)
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, {'options': ['--layout=reverse', '--info=inline', '--preview', '~/.vim/plugged/fzf.vim/bin/preview.sh {}']}, <bang>0)
-let g:gruvbox_termcolors = 223
 
 "COCVIM Config
 " TextEdit might fail if hidden is not set.
